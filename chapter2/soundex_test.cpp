@@ -25,3 +25,7 @@ TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
 TEST_F(SoundexEncoding, IgnoresNonAlphabetics) {
   ASSERT_THAT(soundex.encode("A#"), Eq("A000"));
 }
+
+TEST_F(SoundexEncoding, ReplaceMultipleConsonantsWithDigits) {
+  ASSERT_THAT(soundex.encode("Acdl"), Eq("A234"));
+}

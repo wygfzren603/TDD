@@ -14,6 +14,9 @@ private:
   std::string head(const std::string& word) const {
     return word.substr(0, 1);
   }
+  std::string tail(const std::string& word) const {
+    return word.substr(1);
+  }
   std::string encode_digit(char letter) const {
     const std::unordered_map<char, std::string> encodings{
       {'b', "1"}, {'f', "1"}, {'p', "1"}, {'v', "1"},
@@ -28,8 +31,10 @@ private:
     return it == encodings.end() ? "" : it->second;
   }
   std::string encode_digits(const std::string& word) const {
-    if (word.length() > 1) return encode_digit(word[1]);
-    return "";
+    if (word.empty()) return "";
+    std::string encoding;
+    for (auto letter : word) encoding += encode_digit(letter);
+    return encoding;
   }
   std::string zero_pad(const std::string& word) const {
     int zerosNeeded = MAX_CODE_LENGTH - word.length();
