@@ -8,7 +8,7 @@ const size_t MAX_CODE_LENGTH{4};
 class Soundex{
 public:
   std::string encode(const std::string& word) const {
-    return zero_pad(head(word) + encode_digits(word));
+    return zero_pad(upper_front(head(word)) + encode_digits(word));
   }
   std::string encode_digit(char letter) const {
     const std::unordered_map<char, std::string> encodings{
@@ -55,6 +55,11 @@ private:
   std::string zero_pad(const std::string& word) const {
     int zerosNeeded = MAX_CODE_LENGTH - word.length();
     return word + std::string(zerosNeeded, '0');
+  }
+
+  std::string upper_front(const std::string& word) const {
+    return std::string(1, 
+        std::toupper(static_cast<unsigned char>(word.front())));
   }
 };
 
