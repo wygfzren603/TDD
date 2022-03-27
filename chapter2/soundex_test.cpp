@@ -22,4 +22,6 @@ TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
   ASSERT_THAT(soundex.encode("Ax"), Eq("A200"));
 }
 
-
+TEST_F(SoundexEncoding, IgnoresNonAlphabetics) {
+  ASSERT_THAT(soundex.encode("A#"), Eq("A000"));
+}
