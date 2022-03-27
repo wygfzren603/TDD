@@ -30,10 +30,16 @@ private:
     auto it  = encodings.find(letter);
     return it == encodings.end() ? "" : it->second;
   }
+  bool is_complete(const std::string& encoding) const {
+    return encoding.length() == MAX_CODE_LENGTH - 1;
+  }
   std::string encode_digits(const std::string& word) const {
     if (word.empty()) return "";
     std::string encoding;
-    for (auto letter : word) encoding += encode_digit(letter);
+    for (auto letter : word) {
+      if (is_complete(encoding)) break;
+      encoding += encode_digit(letter);
+    }
     return encoding;
   }
   std::string zero_pad(const std::string& word) const {
