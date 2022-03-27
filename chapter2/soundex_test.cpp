@@ -33,3 +33,15 @@ TEST_F(SoundexEncoding, ReplaceMultipleConsonantsWithDigits) {
 TEST_F(SoundexEncoding, LimitsLengthToFourCharacters) {
   ASSERT_THAT(soundex.encode("Dcdlb").length(), Eq(4u));
 }
+
+TEST_F(SoundexEncoding, IgnoresVowelLikeLetters) {
+  ASSERT_THAT(soundex.encode("Baeiouhywcdl"), Eq("B234"));
+}
+
+TEST_F(SoundexEncoding, CombinesDuplicateEncodings) {
+  ASSERT_THAT(soundex.encode_digit('b'), Eq(soundex.encode_digit('f')));
+  ASSERT_THAT(soundex.encode_digit('c'), Eq(soundex.encode_digit('g')));
+  ASSERT_THAT(soundex.encode_digit('d'), Eq(soundex.encode_digit('t')));
+
+  ASSERT_THAT(soundex.encode("Abfcgdt"), Eq("A123"));
+}
