@@ -9,7 +9,7 @@ const std::string NotADigit{"*"};
 class Soundex{
 public:
   std::string encode(const std::string& word) const {
-    return zero_pad(upper_front(head(word)) + encode_digits(word));
+    return zero_pad(upper_front(head(word)) + encode_digits(tail(word)));
   }
   std::string encode_digit(char letter) const {
     const std::unordered_map<char, std::string> encodings{
@@ -21,7 +21,7 @@ public:
       {'m', "5"}, {'n', "5"},
       {'r', "6"}
     };
-    auto it  = encodings.find(letter);
+    auto it  = encodings.find(lower(letter));
     return it == encodings.end() ? NotADigit : it->second;
   }
 private:
@@ -38,7 +38,7 @@ private:
   }
 
   std::string last_digit(const std::string& encoding) const {
-    if (encoding.empty()) return "";
+    if (encoding.empty()) return NotADigit;
     return std::string(1, encoding.back());
   }
 
@@ -63,6 +63,10 @@ private:
   std::string upper_front(const std::string& word) const {
     return std::string(1, 
         std::toupper(static_cast<unsigned char>(word.front())));
+  }
+
+  char lower(char c) const {
+    return std::tolower(static_cast<unsigned char>(c));
   }
 };
 
