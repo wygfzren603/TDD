@@ -54,16 +54,21 @@ private:
   }
 
   void encode_tail(const std::string& word, std::string& encoding) const {
-    for (auto letter : tail(word)) {
+    for (auto i = 1u; i < word.length(); i++) {
       if (is_complete(encoding)) break;
-      encode_letter(letter, encoding);
+      encode_letter(word[i], word[i-1], encoding);
     }
   }
 
-  void encode_letter(char letter, std::string& encoding) const {
+  void encode_letter(char letter, char last_letter, std::string& encoding) const {
       auto digit = encode_digit(letter);
-      if (digit != NotADigit && digit != last_digit(encoding))
+      if (digit != NotADigit && (digit != last_digit(encoding)
+          || is_vowel(last_letter)))
         encoding += digit;
+  }
+
+  bool is_vowel(char letter) const {
+    return std::string("aeiouy").find((lower(letter))) != std::string::npos;
   }
 
   std::string zero_pad(const std::string& word) const {
