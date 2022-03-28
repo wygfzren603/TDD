@@ -43,17 +43,27 @@ private:
   }
 
   std::string encode_digits(const std::string& word) const {
-    if (word.empty()) return "";
     std::string encoding;
+    encode_head(word, encoding);
+    encode_tail(word, encoding);
+    return encoding;
+  }
+
+  void encode_head(const std::string& word, std::string& encoding) const {
     encoding += encode_digit(word.front());
+  }
+
+  void encode_tail(const std::string& word, std::string& encoding) const {
     for (auto letter : tail(word)) {
       if (is_complete(encoding)) break;
+      encode_letter(letter, encoding);
+    }
+  }
 
+  void encode_letter(char letter, std::string& encoding) const {
       auto digit = encode_digit(letter);
       if (digit != NotADigit && digit != last_digit(encoding))
         encoding += digit;
-    }
-    return encoding;
   }
 
   std::string zero_pad(const std::string& word) const {
