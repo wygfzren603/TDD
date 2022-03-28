@@ -9,7 +9,7 @@ const std::string NotADigit{"*"};
 class Soundex{
 public:
   std::string encode(const std::string& word) const {
-    return zero_pad(upper_front(head(word)) + encode_digits(tail(word)));
+    return zero_pad(upper_front(head(word)) + tail(encode_digits(word)));
   }
   std::string encode_digit(char letter) const {
     const std::unordered_map<char, std::string> encodings{
@@ -34,7 +34,7 @@ private:
   }
 
   bool is_complete(const std::string& encoding) const {
-    return encoding.length() == MAX_CODE_LENGTH - 1;
+    return encoding.length() == MAX_CODE_LENGTH;
   }
 
   std::string last_digit(const std::string& encoding) const {
@@ -45,7 +45,8 @@ private:
   std::string encode_digits(const std::string& word) const {
     if (word.empty()) return "";
     std::string encoding;
-    for (auto letter : word) {
+    encoding += encode_digit(word.front());
+    for (auto letter : tail(word)) {
       if (is_complete(encoding)) break;
 
       auto digit = encode_digit(letter);
