@@ -18,3 +18,18 @@ TEST_F(ARetweetCollection, IsNoLongerEmptyAfterTweetAdd) {
   ASSERT_FALSE(collection.is_empty());
 }
 
+TEST_F(ARetweetCollection, HasSizeOfOneAfterTweetAdded) {
+  collection.add(Tweet());
+  ASSERT_THAT(collection.size(), Eq(1u));
+}
+
+class BRetweetCollection : public Test {
+  public:
+    RetweetCollection collection;
+};
+
+TEST_F(BRetweetCollection, HasSizeOfTwoAfterTwoTweetsAdded) {
+  collection.add(Tweet());
+  collection.add(Tweet());
+  ASSERT_THAT(collection.size(), Eq(2u));
+}
