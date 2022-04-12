@@ -33,3 +33,13 @@ TEST_F(BRetweetCollection, HasSizeOfTwoAfterTwoTweetsAdded) {
   collection.add(Tweet());
   ASSERT_THAT(collection.size(), Eq(2u));
 }
+
+class CRetweetCollection : public Test {
+  public:
+    RetweetCollection collection;
+};
+TEST_F(CRetweetCollection, DecreasesSizeAfterRemovingTweet) {
+  collection.add(Tweet());
+  collection.remove(Tweet());
+  ASSERT_THAT(collection.size(), Eq(0u));
+}

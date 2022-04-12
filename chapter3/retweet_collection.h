@@ -19,6 +19,9 @@ class RetweetCollection {
     void add(const Tweet& tweet) {
       size_++;
     }
+    void remove(const Tweet& tweet) {
+      size_--;
+    }
   private:
     unsigned int size_;
 };
