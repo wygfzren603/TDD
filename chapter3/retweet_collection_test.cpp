@@ -3,8 +3,10 @@
 using namespace ::testing;
 
 class ARetweetCollection : public Test {
-  RetweetCollection retweets;
+  public:
+    RetweetCollection retweets;
 };
 
-TEST(ARetweetCollection, IsEmptyWhenCreated) {
+TEST_F(ARetweetCollection, IsEmptyWhenCreated) {
+  ASSERT_THAT(retweets.size(), Eq(0u));
 }
