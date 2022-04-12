@@ -20,7 +20,8 @@ class RetweetCollection {
       size_++;
     }
     void remove(const Tweet& tweet) {
-      size_--;
+      if (size_ == 0) size_ = 0;
+      else size_--;
     }
   private:
     unsigned int size_;

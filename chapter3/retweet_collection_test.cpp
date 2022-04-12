@@ -43,3 +43,15 @@ TEST_F(CRetweetCollection, DecreasesSizeAfterRemovingTweet) {
   collection.remove(Tweet());
   ASSERT_THAT(collection.size(), Eq(0u));
 }
+TEST_F(CRetweetCollection, IsEmptyAfterRemovingTweet) {
+  collection.add(Tweet());
+  collection.remove(Tweet());
+  ASSERT_TRUE(collection.is_empty());
+}
+
+TEST_F(CRetweetCollection, HasSizeOfZeroAfterRemovingMoreTweets) {
+  collection.add(Tweet());
+  collection.remove(Tweet());
+  collection.remove(Tweet());
+  ASSERT_THAT(collection.size(), Eq(0u));
+}
